@@ -1,0 +1,126 @@
+---
+name: sarvam-indic-dubbing
+description: Comprehensive production guide and runbook for Indic voice translation, multi-character voice dubbing, Foley sound design, video muxing, overlap prevention, and lip-sync safety using Sarvam AI (mayura:v1, bulbul:v3, bulbul:v4-flash) and FFmpeg. Use when dubbing vertical shorts, web series, or videos into Indian languages (Tamil, Hindi, Telugu, Kannada, Malayalam, Bengali, Marathi, Punjabi, Gujarati).
+---
+
+# Sarvam Indic Dubbing & Audio Engineering Production Guide
+
+## Purpose & Scope
+This skill provides a standardized, professional audio engineering and dubbing pipeline for Indian languages using **Sarvam AI** APIs, local FFmpeg audio synthesis, and automated distribution to YouTube channel queues via the **SMM CLI** agent.
+
+---
+
+## 1. Sarvam API Essentials
+
+### Authentication
+* **Header:** `api-subscription-key: <SARVAM_API_KEY>`
+* **Status Codes:** Note that auth errors return `403 Forbidden` (`invalid_api_key_error`).
+
+### Endpoints
+1. **Text Translation:** `POST https://api.sarvam.ai/translate`
+   * `input`: Source sentence (max 1000 chars for `mayura:v1`).
+   * `source_language_code`: `en-IN` (or `auto`).
+   * `target_language_code`: `ta-IN`, `hi-IN`, `te-IN`, `kn-IN`, `ml-IN`, `mr-IN`, `bn-IN`, etc.
+   * `speaker_gender`: `"Male"` or `"Female"`.
+   * `mode`: `"modern-colloquial"` (best for conversational shorts), `"formal"`, or `"code-mixed"`.
+   * `model`: `"mayura:v1"`.
+2. **Text-to-Speech:** `POST https://api.sarvam.ai/text-to-speech`
+   * `model`: `"bulbul:v3"` (stable, supports `temperature`, 11 languages, 48kHz).
+   * `language_code`: `ta-IN`, `hi-IN`, etc.
+   * `speaker`: Exact lowercase speaker ID (see Voice Casting Matrix below).
+   * `pace`: `0.5` to `2.0` (default `1.0`; use `1.10–1.20` for tight short-form pacing).
+   * `temperature`: `0.6` (balanced) to `0.7–0.8` (emotional, warm, conversational).
+   * `speech_sample_rate`: `48000` (for studio quality).
+
+---
+
+## 2. Character Voice Casting Matrix (Bulbul v3)
+
+| Character Archetype | Description & Emotional Register | Tamil (`ta-IN`) | Hindi (`hi-IN`) | Telugu (`te-IN`) | Kannada (`kn-IN`) |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **Female: Vulnerable / Intimate** | Soft, emotional, hesitant, voice-note warmth | `ishita` | `priya` | `kavitha` | `ishita` |
+| **Male: Grounded / Protagonist** | Young adult (25–30), relatable, casual confusion | `ratan` | `shubh` | `ratan` | `ratan` |
+| **Female: Energetic / Confident** | Best friend, expressive, sharp delivery | `ritu` | `suhani` | `pooja` | `neha` |
+| **Male: Casual / Conflicted** | Secondary male, hesitant or conflicted | `rohan` | `ashutosh` | `shubh` | `shubh` |
+| **Elder: Mother / Senior** | Mature maternal authority and warmth | `kavitha` | `roopa` | `kavitha` | `neha` |
+
+---
+
+## 3. Audio Engineering & Acoustic Filters
+
+### Phone / Ear-Speaker Voice Note Filter
+When a character listens to a voice note or phone call, raw studio voice sounds unrealistic. Apply bandpass EQ in FFmpeg:
+```bash
+ffmpeg -i raw_voice.wav -af "highpass=f=320,lowpass=f=3400,equalizer=f=1400:t=q:w=1.2:g=2.5,volume=1.5" phone_voice.wav
+```
+
+### Balcony / Room Acoustic
+For live in-camera dialogue:
+```bash
+ffmpeg -i raw_voice.wav -af "highpass=f=75,equalizer=f=200:t=q:w=1:g=2,equalizer=f=3200:t=q:w=1:g=1.5,volume=1.6" room_voice.wav
+```
+
+---
+
+## 4. Preventing Voice Overlap, Missing Audio & Lip-Sync Issues
+
+### Overlap Detection & Auto-Pacing
+* The dubbing tool measures exact duration of each audio line before mixing.
+* If Line A runs into Line B:
+  $$\text{duration}_{\text{Line A}} > (\text{start}_{\text{Line B}} - \text{start}_{\text{Line A}} - 0.2\text{s})$$
+  The tool dynamically compresses `pace` (e.g. from $1.0\to 1.15$ or $1.20$) to guarantee zero audio collision.
+
+### Shot Cut Containment & Padding
+* Every dialogue line must be contained within its intended shot cut boundaries.
+* Always enforce at least **0.3s pre-roll** and **0.4s post-roll** silence relative to the video cut points.
+
+### Lip-Sync Safety Auditing
+* Tag each line in config with `"visual_framing"`:
+  * `"voice_note"` / `"off_screen"`: Zero lip sync risk.
+  * `"cutaway"` / `"over_shoulder"`: Zero lip sync risk.
+  * `"on_camera_face"`: Audited to ensure word count $\le 5$ words and duration $\le 2.0\text{s}$.
+
+### Universal Dialogue Coverage Invariant
+* Every visual shot featuring interacting characters, comedy beats, celebrations, or reactions MUST include dubbed dialogue across all target languages (e.g. Tamil and Hindi).
+* Even when script outlines list physical action only (e.g. referee arm hoist, winning celebration, crowd gasps), author punchy character dialogue.
+* Never leave character action beats to background Foley/music alone.
+* Always synchronize matching bottom-center English ASS subtitles for every spoken line.
+
+---
+
+## 5. Lossless Video Muxing (Raw Audio Discard)
+Always discard the raw video's audio track (`-map 0:v:0`) to remove AI mumbles and ambient noise generated by Google Flow, and map only the clean master audio track (`-map 1:a:0`):
+```bash
+ffmpeg -y -i input_video.mp4 -i master_soundtrack.wav \
+  -map 0:v:0 -map 1:a:0 \
+  -c:v copy \
+  -c:a aac -b:a 192k -ar 48000 \
+  -shortest output_dubbed.mp4
+```
+
+---
+
+## 6. SMM Channel Queueing & Distribution
+Following user approval, add the dubbed episodes to their designated channel queues in **strict sequential order**:
+
+> [!IMPORTANT]
+> **Sequential Publishing Order Invariant:**
+> Google Sheets / SMM queue is consumed sequentially (top-to-bottom) by the YouTube distribution cron job.
+> Always check existing queue rows before enrolling an episode. Verify that all preceding episodes ($1 \dots N-1$) are already present in the queue with status `COMPLETE` or `READY`.
+> Never enroll Episode $N$ before Episode $N-1$.
+
+```bash
+# Add Tamil master to Story Time Tamil
+python3 /media/vedha/E2/freelance/tools/smm_queue_episode.py \
+  --video "/path/to/episode-NN-tamil.mp4" \
+  --channel "Story Time Tamil" \
+  --lang "ta-IN" \
+  --episode NN
+
+# Add Hindi master to Story Time Hindi
+python3 /media/vedha/E2/freelance/tools/smm_queue_episode.py \
+  --video "/path/to/episode-NN-hindi.mp4" \
+  --channel "Story Time Hindi" \
+  --lang "hi-IN" \
+  --episode NN
+```

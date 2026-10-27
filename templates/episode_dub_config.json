@@ -1,0 +1,55 @@
+{
+  "episode": 1,
+  "series": "The Wrong Number",
+  "distribution": {
+    "channels": {
+      "ta-IN": "Story Time Tamil",
+      "hi-IN": "Story Time Hindi"
+    },
+    "privacy": "public"
+  },
+  "shots": [
+    { "shot": 1, "start": 0.0, "end": 4.01, "framing": "medium_wide", "description": "Balcony dusk, phone vibrating on table" },
+    { "shot": 2, "start": 4.01, "end": 12.01, "framing": "close_up_ear", "description": "Arul holds phone to ear, listening to voice note" },
+    { "shot": 3, "start": 12.01, "end": 18.02, "framing": "tight_reaction", "description": "Arul lowers phone, looks bewildered" },
+    { "shot": 4, "start": 18.02, "end": 22.04, "framing": "over_shoulder_screen", "description": "Thumb hovering over keyboard" }
+  ],
+  "sfx_events": [
+    { "type": "vibration", "at": 1.0, "duration": 0.45 },
+    { "type": "vibration", "at": 2.1, "duration": 0.45 },
+    { "type": "tap", "at": 3.8 },
+    { "type": "chime_start", "at": 4.2 },
+    { "type": "chime_end", "at": 11.55 },
+    { "type": "tension_swell", "at": 19.2, "end": 21.95 }
+  ],
+  "dialogue_lines": [
+    {
+      "character": "Meera",
+      "archetype": "female_vulnerable",
+      "at": 4.4,
+      "visual_framing": "voice_note",
+      "filter": "phone",
+      "pace": 1.15,
+      "temperature": 0.70,
+      "text": {
+        "ta-IN": "கார்த்தி... இன்னைக்கு ரொம்ப கஷ்டமா இருந்துச்சு. அம்மா உன்ன பத்தி கேட்டாங்க... ப்ளீஸ், ஃப்ரீயா இருக்கும்போது கால் பண்ணு.",
+        "hi-IN": "कार्तिक... आज बहुत मुश्किल दिन था। माँ तुम्हारे बारे में पूछ रही थीं... प्लीज, जब फ्री हो कॉल करना।"
+      },
+      "text_en": "Karthi... today was really hard. Amma asked about you. Please call me back when you are free."
+    },
+    {
+      "character": "Arul",
+      "archetype": "male_grounded",
+      "at": 14.3,
+      "visual_framing": "on_camera_face",
+      "filter": "room",
+      "pace": 1.0,
+      "temperature": 0.60,
+      "text": {
+        "ta-IN": "இது யாருடா இது... Wrong number-ஆ?",
+        "hi-IN": "ये कौन है यार... क्या ये wrong number है?"
+      },
+      "text_en": "Who is this... is it a wrong number?"
+    }
+  ]
+}

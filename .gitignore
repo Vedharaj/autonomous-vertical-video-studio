@@ -1,0 +1,58 @@
+# ==============================================================================
+# Autonomous Vertical Video Studio — Git Ignore Rules
+# Excludes heavy series production folders, generated media, and local secrets
+# ==============================================================================
+
+# Exclude all fiction series production directories
+match_fixer/
+the wrong number/
+the\ wrong\ number/
+series/
+episodes/
+assets/
+
+# Exclude generated video & audio media binaries
+*.mp4
+*.wav
+*.m4a
+*.mov
+*.avi
+*.mkv
+*.flac
+*.mp3
+
+# Exclude generated subtitles & verification stills
+*.ass
+*.srt
+verify_*.jpg
+verify_*.jpeg
+*_preview.jpg
+
+# Secrets, API keys & environment files
+.env
+config/.env
+*.key
+*.pem
+*.token
+credentials.json
+client_secrets.json
+
+# Python caches, virtual environments & temporary files
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Operating system & Editor metadata
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*.log

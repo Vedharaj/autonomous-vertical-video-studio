@@ -1,0 +1,81 @@
+# ==============================================================================
+# Match Fixers — Series & Audio Configuration Schema (YAML)
+# ==============================================================================
+
+series:
+  title: "Match Fixers"
+  format: "vertical_shorts"
+  aspect_ratio: "9:16"
+  resolution:
+    width: 720
+    height: 1280
+  frame_rate: 24
+  target_duration_range: [45.0, 60.0]
+
+channels:
+  tamil:
+    name: "Story Time Tamil"
+    language_code: "ta-IN"
+    tags: ["matchfixers", "tamilshorts", "villagecricket", "tamilwebseries", "shorts", "comedy"]
+  hindi:
+    name: "Story Time Hindi"
+    language_code: "hi-IN"
+    tags: ["matchfixers", "hindishorts", "cricketcomedy", "hindiwebseries", "shorts", "comedy"]
+
+audio:
+  sample_rate: 48000
+  channels: 2
+  dialogue_ducking_db: -3.5
+  normalization_peak_db: -0.5
+  speech_pre_roll_sec: 0.4
+  speech_post_roll_sec: 0.4
+
+voices:
+  sarvam_model: "bulbul:v3"
+  characters:
+    veera:
+      role: "captain"
+      ta-IN: "ratan"
+      hi-IN: "shubh"
+      pace: 1.05
+      temperature: 0.65
+    chintu:
+      role: "batsman_kid"
+      ta-IN: "rohan"
+      hi-IN: "ashutosh"
+      pace: 1.15
+      temperature: 0.70
+    pandi:
+      role: "commentator_referee"
+      ta-IN: "vijay"
+      hi-IN: "varun"
+      pace: 1.10
+      temperature: 0.65
+    kavya:
+      role: "scorer_investigator"
+      ta-IN: "ishita"
+      hi-IN: "priya"
+      pace: 1.05
+      temperature: 0.65
+    boss_mani:
+      role: "sponsor_fixer"
+      ta-IN: "ratan"
+      hi-IN: "shubh"
+      pace: 1.00
+      temperature: 0.60
+
+subtitles:
+  format: "ASS"
+  language: "en"
+  font: "Arial"
+  font_size: 34
+  bold: true
+  alignment: 2 # Bottom-Center
+  margin_v: 110
+  safe_zone_rows: [1107, 1169]
+
+publishing:
+  approval_gate_required: true
+  sequential_order_enforced: true
+  drive_folder_id: "1IxzXjqaFbCx6Audvw1pSmILrGzN8aqVp"
+  schedule_times_ist: ["11:00", "18:00"]
