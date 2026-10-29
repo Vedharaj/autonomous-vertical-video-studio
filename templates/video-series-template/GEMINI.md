@@ -1,43 +1,29 @@
-# Production Consistency & Operational Invariants
+# Vertical Short Fiction Series — Universal Production Rules
 
-## Core Production Rules
-1. **Character Consistency Locks:**
-   - Reference registered character asset chips (`asset:<Character>`) and 360° turnaround reference sheets.
-   - Preserve costume, props, and facial characteristics across all shots.
-   - Never re-prompt character faces purely from text.
+## 1. Mandatory Distribution Approval Gate (No Auto-Uploads)
+- **Local Completion Only:** Assemble, dub, Foley-mix, and burn subtitles strictly in the local episode workspace.
+- **Verification Showcase:** Present verification metrics (duration, audio channels, pure ASS canvas bounding box audit) and keyframe stills to the user.
+- **STRICT INVARIANT:** NEVER upload to Google Drive, NEVER run `smm queue add`, and NEVER modify Google Sheets scheduling rows without explicit user approval.
+- **Wait for Sign-Off:** Wait for explicit user confirmation (e.g. "approved", "proceed to queue") before executing any Drive or SMM distribution commands.
 
-2. **Duration Strict Standard (45s–60s):**
-   - Every episode MUST run between 45.0s and 60.0s in total master runtime.
+## 2. Reference Generation Priority (Gemini First)
+- **Primary Engine:** Always generate 9:16 vertical shot reference images in Gemini (`gemini.google.com`) via Playwriter.
+- **Fallback Engine:** Failover to ChatGPT (`chatgpt.com`) only if Gemini encounters rate limits or safety filter blocks.
 
-3. **Dual-Anchor Conditioning in Flow:**
-   - Always condition video generation in Google Flow using both:
-     1. The registered character asset chip
-     2. The specific shot reference image chip (`epXX_shotYY_ref.png`)
+## 3. Hybrid Audio Preservation & Speech Collision Gating
+- **Background Preservation:** Preserve authentic 48kHz environmental audio (crowd murmur, sports action, nature, room tone) from AI video takes. Never replace with flat synthetic sine waves.
+- **Speech Collision Gate:** In any shot featuring character dialogue (e.g. Pandi commentary), mute/purge raw video audio to eliminate baked-in English AI speech. Never let raw AI speech play concurrently with dubbed dialogue.
+- **Dynamic Ducking:** Apply smooth -3.5dB to -4dB ducking under character speech so dialogue is punchy and diction is crystal clear, while ambient environment sounds remain audible.
 
-4. **Single-Perspective Reference Invariant:**
-   - Every Gemini reference prompt must enforce a single unified camera perspective.
-   - Mandatory negative constraints:
-     `"Single unified composition, absolutely NO split screen, NO multi-panel collage, NO duplicated characters, NO motion trail lines, NO text."`
+## 4. Subtitle Standard (Bottom-Center English ASS Format)
+- Subtitles must be in English ASS format (`PlayResX: 720`, `PlayResY: 1280`, `Fontsize: 34`, `Bold: 1`, `Alignment: 2` (Bottom-Center), `MarginV: 110`).
+- Bounded strictly between vertical rows 1107 and 1169 (~111px margin from bottom edge, 100% face/chest protection).
 
-5. **Verified Take Retrieval Gate:**
-   - Verify take title in Flow UI header before downloading to prevent wrong-video corruption.
+## 5. Runtime Invariant (45s–60s)
+- All episodes must adhere strictly to 45.0s–60.0s total runtime.
 
-6. **Hybrid Audio Architecture & Speech Collision Gating:**
-   - Purge/mute raw video take audio during all dialogue shots.
-   - Preserve authentic environmental ambiance from speech-free takes.
-   - Apply smooth -3.5dB to -4dB dynamic ducking under character speech.
-
-7. **Universal Dialogue Coverage Invariant:**
-   - Every visual shot with interacting characters, comedy beats, celebrations, or reactions must include voiced dialogue in all target languages. Never leave character action beats silent.
-
-8. **Bottom-Center English Subtitle Standard (ASS Format):**
-   - Subtitles burned onto vertical video masters MUST be in English.
-   - ASS parameters: `PlayResX: 720`, `PlayResY: 1280`, `Fontsize: 34`, `Alignment: 2` (Bottom-Center), `MarginV: 110`.
-   - Strictly bounded between vertical rows 1107 and 1169 (~111px above bottom edge).
-
-9. **Sequential Publishing Order Invariant:**
-   - Episodes MUST be enrolled in Google Sheets / SMM queue in strict numerical sequence (Ep. 1 -> Ep. 2 -> Ep. 3 -> ...).
-   - Preceding episodes ($1 \dots N-1$) must be verified present in the queue before adding Episode $N$.
-
-10. **Mandatory Human Approval Gate:**
-    - Never upload completed episode videos to Google Drive or modify Google Sheets / SMM queues without explicit user approval.
+## 6. Google Flow Video Master Prompt Invariant
+- Video generation prompts in Google Flow (`Omni 1.1 Flash`) must follow the strict 6-slot formula:
+  `[Dual-Anchor Tokens] + [Camera Motion/Framing] + [Character Visual Locks & Costumes] + [Sanitized Action Beat] + [Facial Expression/Reaction] + [Environment & Lighting]`
+- Condition on both registered character tokens (`@Character` or `asset:<Name>`) and the shot reference still (`epXX_shotYY_ref.png`).
+- **Zero-Dialogue Guard:** NEVER include spoken dialogue quotes in video prompts. Describe visual behavior and physical comedy only.

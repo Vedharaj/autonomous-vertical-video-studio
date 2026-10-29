@@ -47,6 +47,20 @@ This skill guides the end-to-end production of vertical short-form serial episod
    * Never describe faces purely in natural language without linking the registered asset token.
    * Lock costume, hair, and lighting palette across all shots within an episode.
 
+### 6-Slot Master Prompt Architecture
+Every video generation prompt in Flow (`Omni 1.1 Flash`) must adhere to this standardized formula:
+```text
+asset:<Character1> [asset:<Character2>] asset:<ShotReferenceStill>
+[CAMERA]: [Framing & tripod/push-in movement — single unified perspective]
+[CHARACTERS]: [Chibi 1:2 ratio, oversized round heads, exact costume/props]
+[ACTION]: [Concrete physical motion — ZERO dialogue quotes]
+[EXPRESSION]: [Eye movements, brow furrow, smiling, comedic gestures]
+[ENVIRONMENT]: [Location, time of day, lighting continuity]
+```
+* **Web UI Syntax (Playwriter):** Attach `@Character` chips and the uploaded reference still chip, followed by slots 2 through 6.
+* **Flow MCP Syntax (`flow_generate`):** Supply `asset:<Character>` and `asset:<RefStill>` in `prompt` and in `reference_images`.
+* **Zero-Dialogue Guard:** Never include quotes or spoken lines. Diffusion models synthesize garbled speech when dialogue is present, corrupting multilingual dubbing.
+
 ---
 
 ## 4. Google Flow Credit Safety & Presets

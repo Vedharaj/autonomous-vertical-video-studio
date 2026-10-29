@@ -21,3 +21,9 @@
 
 ## 5. Runtime Invariant (45s–60s)
 - All episodes must adhere strictly to 45.0s–60.0s total runtime.
+
+## 6. Google Flow Video Master Prompt Invariant
+- Video generation prompts in Google Flow (`Omni 1.1 Flash`) must follow the strict 6-slot formula:
+  `[Dual-Anchor Tokens] + [Camera Motion/Framing] + [Character Visual Locks & Costumes] + [Sanitized Action Beat] + [Facial Expression/Reaction] + [Environment & Lighting]`
+- Condition on both registered character tokens (`@Character` or `asset:<Name>`) and the shot reference still (`epXX_shotYY_ref.png`).
+- **Zero-Dialogue Guard:** NEVER include spoken dialogue quotes in video prompts. Describe visual behavior and physical comedy only.

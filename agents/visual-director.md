@@ -13,7 +13,8 @@ The **Visual Director** is responsible for:
    - Enforces negative constraints: `"Single unified composition, absolutely NO split screen, NO multi-panel collage, NO duplicated characters, NO motion trail lines, NO text."`
    - Saves references into `assets/epXX/epXX_shotYY_ref.png`.
 2. **Dual-Anchor Conditioning in Google Flow:**
-   - In Flow's prompt bar, attaches registered character chips (`@Veera`, `@Chintu`, etc.) + the shot reference image chip.
+   - In Flow's prompt bar, attaches registered character chips (`@Veera`, `@Chintu`, etc. or `asset:<Name>`) + the shot reference image chip.
+   - Strictly enforces the **6-Slot Master Prompt Architecture** (`[Tokens] + [Camera] + [Character Costumes] + [Action] + [Facial Reaction] + [Environment]`).
    - Enforces Prompt Sanitization: describes physical movements, facial expressions, and comedic reactions only. Never includes spoken dialogue text in Flow prompts.
    - Renders 720p 9:16 vertical video takes (`Omni 1.1 Flash`).
 3. **Verified Take Retrieval Gate:**
