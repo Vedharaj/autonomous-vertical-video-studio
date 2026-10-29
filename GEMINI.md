@@ -23,7 +23,9 @@
 - All episodes must adhere strictly to 45.0s–60.0s total runtime.
 
 ## 6. Google Flow Video Master Prompt Invariant
-- Video generation prompts in Google Flow (`Omni 1.1 Flash`) must follow the strict 6-slot formula:
-  `[Dual-Anchor Tokens] + [Camera Motion/Framing] + [Character Visual Locks & Costumes] + [Sanitized Action Beat] + [Facial Expression/Reaction] + [Environment & Lighting]`
-- Condition on both registered character tokens (`@Character` or `asset:<Name>`) and the shot reference still (`epXX_shotYY_ref.png`).
+- Video generation prompts in Google Flow (`Omni 1.1 Flash`) must follow the Continuity-Locked Shot Prompt formula:
+  `[Multi-Anchor Tokens] + [Camera Motion/Framing] + [Chronological Action Sequence: Beginning -> Action 1 -> Action 2 -> Reaction -> Ending] + [Physical/Facial Performance (Zero Dialogue)] + [Screen Positions & Prop Hand Assignment] + [Environment & Lighting] + [Final-Frame Handoff] + [Shot-Specific Failure Prevention]`
+- **Actual Ingredient Attachment:** Supply actual visual ingredients for identity (approved character assets) and composition (shot reference image). When multiple characters appear, attach chips for both. Never rely on text filenames alone.
+- **Technical Control Enforcement:** Enforce `720p`, `9:16`, `duration`, and `Omni 1.1 Flash` via Flow UI/API controls, not prompt text.
 - **Zero-Dialogue Guard:** NEVER include spoken dialogue quotes in video prompts. Describe visual behavior and physical comedy only.
+- **Continuity Tracking:** Maintain an episode continuity log tracking left/right positions, hand assignments, and prop states across every shot cut.

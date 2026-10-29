@@ -6,13 +6,14 @@
 - All project-specific agents, skills, rules, prompts, and configurations MUST be created and maintained inside this project repository.
 - Never write project-specific customizations to `~/.gemini/antigravity-cli/skills/` or other machine-global paths.
 
-## 2. Dual-Anchor Conditioning & 6-Slot Master Prompt Invariant
+## 2. Multi-Anchor Conditioning & Continuity-Locked Prompt Invariant
 - Standalone reference frames in Gemini Vision must use single unified camera perspective.
 - Mandatory negative constraint in all image prompts: `"Single unified composition, absolutely NO split screen, NO multi-panel collage, NO duplicated characters, NO motion trail lines, NO text."`
-- Video takes in Flow must be conditioned on both registered character tokens (`@Character` or `asset:<Name>`) and the shot reference image chip.
-- **6-Slot Master Prompt Architecture:** All video generation prompts must adhere to the 6-slot formula:
-  `[Dual-Anchor Tokens] + [Camera Motion/Framing] + [Character Visual Locks & Costumes] + [Sanitized Action Beat] + [Facial Expression/Reaction] + [Environment & Lighting Continuity]`
-- **Zero-Dialogue Guard:** NEVER include spoken dialogue quotes in video prompts. Describe visual action and comedic physical reactions only to prevent diffusion speech synthesis.
+- Video takes in Flow must be conditioned on actual visual ingredients: registered character asset(s) for identity + shot reference still for composition and pose. Attach chips for both characters in multi-character shots.
+- **Continuity-Locked Prompt Standard:** Prompts must follow chronological sequencing (Beginning -> Action 1 -> Action 2 -> Reaction -> Ending), explicit spatial blocking (left/right positions, hand assignment for props), final-frame handoff, and shot-specific failure prevention.
+- **Technical Control Enforcement:** Enforce `720p`, `9:16`, `duration`, and `Omni 1.1 Flash` via UI/API controls, never prompt text alone.
+- **Zero-Dialogue Guard:** NEVER include spoken dialogue quotes in video prompts. Describe physical performance only to eliminate speech collision.
+- **Episode Continuity Log:** Maintain an episode continuity log tracking left/right positions, hand assignments, and prop states across all shot cuts.
 
 ## 3. Verified Flow Take Retrieval Gate
 - Inspect header (`h1` or `.header-title`) in the Flow editor before initiating download.

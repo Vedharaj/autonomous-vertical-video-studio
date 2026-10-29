@@ -47,19 +47,22 @@ This skill guides the end-to-end production of vertical short-form serial episod
    * Never describe faces purely in natural language without linking the registered asset token.
    * Lock costume, hair, and lighting palette across all shots within an episode.
 
-### 6-Slot Master Prompt Architecture
+### Continuity-Locked Master Prompt Architecture
 Every video generation prompt in Flow (`Omni 1.1 Flash`) must adhere to this standardized formula:
 ```text
 asset:<Character1> [asset:<Character2>] asset:<ShotReferenceStill>
-[CAMERA]: [Framing & tripod/push-in movement — single unified perspective]
-[CHARACTERS]: [Chibi 1:2 ratio, oversized round heads, exact costume/props]
-[ACTION]: [Concrete physical motion — ZERO dialogue quotes]
-[EXPRESSION]: [Eye movements, brow furrow, smiling, comedic gestures]
-[ENVIRONMENT]: [Location, time of day, lighting continuity]
+[CAMERA]: [Framing & smooth physical movement — single unified perspective, preserving screen direction]
+[ACTION SEQUENCE]: Beginning pose -> Action 1 (leading limb/prop) -> Action 2 (contact/follow-through) -> Interacting reaction -> Ending pose.
+[FACIAL & PHYSICAL PERFORMANCE]: [Eye direction, brow, head tilt, posture, balance — ZERO dialogue quotes]
+[BLOCKING & PROP CONTINUITY]: [Left/right positions, exact hand holding each prop, who touches whom, direction]
+[ENVIRONMENT & LIGHTING]: [Established landmarks, lighting direction, consistent shadows, subtle atmospheric motion]
+[FINAL-FRAME HANDOFF]: [Exact finishing composition and pose for next cut's continuity reference]
+[FAILURE PREVENTION]: Avoid [targeted risks for this shot: e.g. hand swapping, floating feet, duplicated bat].
 ```
-* **Web UI Syntax (Playwriter):** Attach `@Character` chips and the uploaded reference still chip, followed by slots 2 through 6.
-* **Flow MCP Syntax (`flow_generate`):** Supply `asset:<Character>` and `asset:<RefStill>` in `prompt` and in `reference_images`.
+* **Ingredient Attachment Invariant:** Writing a filename like `ep04_shot01_ref.png` in text does NOT feed image information to the video model. Always attach the actual uploaded or registered visual ingredients (Web UI chips `@Character` + uploaded still chip, or MCP `reference_images: ["asset:<Character>", "asset:<RefStill>"]`). Multi-character shots must attach reference assets for all visible characters.
+* **Control vs. Prompt Enforcement:** Always enforce technical settings (`Omni 1.1 Flash`, `720p`, `9:16`, `duration`) via Flow's settings UI or MCP parameters—never rely on prompt text alone to enforce aspect ratio or resolution.
 * **Zero-Dialogue Guard:** Never include quotes or spoken lines. Diffusion models synthesize garbled speech when dialogue is present, corrupting multilingual dubbing.
+* **Episode Continuity Log:** Maintain an `assets/epXX/continuity_log.md` tracking screen positions, hand assignments, and prop states across every shot cut in the episode.
 
 ---
 
