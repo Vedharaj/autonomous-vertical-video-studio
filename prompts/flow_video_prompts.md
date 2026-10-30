@@ -28,47 +28,99 @@
 
 ---
 
-## 3. Continuity-Locked Shot Prompt Template
+## 3. Cinematic Video Generation Master Scene Prompt Standard
+
+Every shot prompt in Google Flow MUST strictly follow this exact 10-section template:
 
 ```text
-# GOOGLE FLOW — CONTINUITY-LOCKED SHOT PROMPT
+# CINEMATIC VIDEO GENERATION — MASTER SCENE PROMPT
 
-## REFERENCE CONDITIONING
-Ingredients attached: [Character asset(s)] + [Shot reference image]
-Identity: @CharacterName1 [@CharacterName2]
-Composition: epXX_shotYY_ref.png
+## 1. REFERENCE ASSETS
+- Character reference: @CharacterName
+- Location reference: @LocationName
+- Prop reference: @PropName
+- Previous shot / start frame: [Attach the final frame of the previous clip when needed]
 
-## CAMERA
-[Shot size: e.g. Static medium shot / Dynamic medium-wide / Slow cinematic push-in], [Camera angle: e.g. Eye-level / Low-angle / Over-the-shoulder], [Subject framing]. Smooth physical motion, preserving established screen direction and spatial relationships.
+Use the attached references as the visual authority for identity, appearance, environment and object design. Do not reinterpret or redesign them.
 
-## ACTION SEQUENCE
-Beginning: [Exact initial pose, screen position, and balance].
-Action 1: [First physical movement, leading limb/prop].
-Action 2: [Second movement, physical contact or follow-through].
-Reaction: [Visible physical or facial response from interacting character, if present].
-Ending: [Exact final pose, gaze direction, hand position, and prop state].
+## 2. CHARACTER IDENTITY LOCK
+The main character is [CHARACTER NAME], a [AGE]-year-old [GENDER] with [FACE SHAPE], [SKIN TONE], [EYE SHAPE AND COLOR], [NOSE], [HAIR STYLE], [FACIAL HAIR], [HEIGHT AND BUILD], and [DISTINCTIVE FEATURES].
 
-## FACIAL EXPRESSION AND BODY LANGUAGE
-[Visible details: eye direction, blinking, eyebrow movement, mouth shape, head tilt, posture, balance, and timing]. Communicate emotion purely through physical performance. No spoken dialogue or instructions to speak.
+Clothing: [EXACT GARMENT, COLOR, FABRIC, FIT, SHOES AND ACCESSORIES].
 
-## CHARACTER AND PROP CONTINUITY
-Preserve approved chibi designs (1:2 head-to-body ratio), clothing, and props.
-- Character positions: [Left / Right / Foreground / Background].
-- Hand assignment: [Left hand / Right hand holding or touching specific prop].
-- Prop state: [Starting position -> trajectory -> ending position].
-- Interaction: [Who touches whom, which hand/arm is involved, direction of movement].
+Preserve the same facial identity, age, hairstyle, skin tone, body proportions, clothing and accessories as the character reference. Maintain natural anatomy and realistic facial expressions.
 
-## ENVIRONMENT AND LIGHTING
-Location: [Established location: e.g. Rustic South Indian village cricket ground / Tea stall].
-Background landmarks: [Fixed background objects, stumps, banyan tree, scoreboard].
-Lighting: [Direction, intensity, warm golden morning/midday sun, shadow consistency].
-Atmosphere: [Subtle dust haze, gentle breeze rustling coconut palms].
+## 3. LOCATION AND ENVIRONMENT LOCK
+The scene takes place in [EXACT LOCATION]. Preserve the reference's architecture, room dimensions, wall colors, floor material, doors, windows, furniture, background objects and spatial arrangement.
 
-## FINAL-FRAME HANDOFF
-Finish with [specific final composition and pose]. Preserves resulting character positions and object states for the subsequent shot's continuity reference.
+Important landmarks:
+- [LANDMARK 1 AND POSITION]
+- [LANDMARK 2 AND POSITION]
+- [LANDMARK 3 AND POSITION]
 
-## SHOT-SPECIFIC FAILURE PREVENTION
-Avoid: [Targeted failure points: e.g. hand swapping, floating feet, duplicated bat, morphing sunglasses, inconsistent ball trajectory]. Single coherent take without cuts or vocal synthesis.
+Do not add, remove, relocate or redesign established objects unless explicitly required by the action.
+
+## 4. CONTINUITY STATE
+Story timeline: [DAY / NIGHT / EXACT STORY TIME].
+Weather: [WEATHER].
+Lighting condition: [LIGHTING].
+Character position at the start: [POSITION AND ORIENTATION].
+Previous action: [WHAT HAPPENED IN THE PREVIOUS SHOT].
+Current emotional state: [EMOTION].
+Props currently held or placed: [OBJECT AND EXACT POSITION].
+
+Begin from this established state. Preserve all details that are not explicitly changed by the new action.
+
+## 5. BLOCKING AND ACTION
+At the beginning, [CHARACTER] stands/sits at [EXACT POSITION], facing [DIRECTION].
+
+Action sequence:
+1. Start with [INITIAL POSE].
+2. The character [PRIMARY ACTION].
+3. During the action, [SUBTLE BODY MOVEMENT AND FACIAL EXPRESSION].
+4. Finish with [FINAL POSE AND GAZE DIRECTION].
+
+Use believable timing, natural body mechanics and continuous motion. Keep the action physically possible. Do not introduce unrelated actions.
+
+## 6. CAMERA AND COMPOSITION
+Shot size: [WIDE / MEDIUM / CLOSE-UP / EXTREME CLOSE-UP].
+Camera angle: [EYE LEVEL / LOW / HIGH / OVER-THE-SHOULDER].
+Camera position: [EXACT RELATION TO CHARACTER AND LOCATION].
+Lens aesthetic: [NATURAL CINEMATIC PERSPECTIVE / SHALLOW DEPTH OF FIELD].
+Camera movement: [STATIC / SLOW DOLLY / TRACKING / PAN / TILT].
+Composition: [SUBJECT POSITION, HEADROOM, FOREGROUND AND BACKGROUND].
+Focus: [PRIMARY SUBJECT OR OBJECT].
+
+Use one coherent camera setup. Avoid unintended cuts, sudden zooms, camera teleportation or changing screen direction.
+
+## 7. LIGHTING AND VISUAL STYLE
+Lighting: [KEY LIGHT DIRECTION, FILL LIGHT, PRACTICAL LIGHT SOURCES].
+Color palette: [FIXED COLORS].
+Contrast: [SOFT / MODERATE / HIGH].
+Visual style: [PHOTOREALISTIC CINEMA / ANIMATION STYLE: Stylized 3D / Ghibli-inspired].
+Texture: [SKIN, FABRIC, WOOD, METAL AND ENVIRONMENTAL DETAIL].
+Atmosphere: [MOOD AND AMBIENCE].
+
+Maintain the established visual style and color grading. Keep lighting consistent with the location, time and previous shot.
+
+## 8. AUDIO AND DIALOGUE
+Ambient sound: [ROOM TONE, WIND, RAIN, TRAFFIC OR OTHER SOUNDS].
+Character voice: [VOICE DESCRIPTION OR ATTACHED VOICE REFERENCE].
+Dialogue: "[EXACT SPOKEN LINE]".
+Delivery: [PACE, EMOTION, VOLUME AND PAUSES].
+Other sounds: [FOOTSTEPS, OBJECT MOVEMENT OR SILENCE].
+
+Only the specified character speaks. Keep dialogue and sound effects appropriate to the action. If there is no dialogue, specify no spoken dialogue.
+
+## 9. FINAL FRAME AND CONTINUITY HANDOFF
+The clip ends with [EXACT FINAL POSE, CAMERA FRAMING AND OBJECT STATE].
+
+The final frame must be usable as the starting reference for the next shot. Preserve the character's identity, clothing, location layout, prop positions, lighting direction and screen direction.
+
+## 10. QUALITY CONTROL
+No identity drift, face morphing, wardrobe changes, duplicated characters, extra limbs, floating objects, unexplained prop changes, inconsistent architecture, flickering lighting, unnatural motion or unintended scene transitions.
+
+Generate one continuous, visually coherent shot that follows the supplied references and the action specified above.
 ```
 
 ---
